@@ -4,7 +4,8 @@
 <style>
 :root{--g:#6B1D2E;--g2:#8A2537;--gd:#B38E5D;--gl:#F3E9DC;--ink:#2A2224;--mut:#6f6467;--ok:#1F6B4E;--bg:#FBF8F4}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
+html,body{height:100%;touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
+button,a,.li,.see{touch-action:manipulation}
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);overflow:hidden}
 .app{height:100%;display:flex;flex-direction:column;max-width:760px;margin:0 auto;background:#fff;box-shadow:0 0 40px rgba(0,0,0,.08)}
 header{background:var(--g);color:#fff;padding:14px 18px 12px;position:relative;flex:none}
@@ -129,6 +130,8 @@ footer button:disabled{opacity:.35}
  <div class="big-seal"><span>MORENA<b>BAJA</b>CALIFORNIA</span></div>
  <h2>Cómo dar de alta a un usuario</h2>
  <p class="lead">Sigue esta guía paso a paso. Tómate tu tiempo: puedes regresar al paso anterior cuando quieras.</p>
+ <a class="go" href="https://soporte.morenapp.mx/soporte/" target="_blank" rel="noopener">🔗 Ir al Sistema Morena</a>
+ <div class="tap" style="margin-top:8px">soporte.morenapp.mx/soporte · ábrelo en otra pestaña y sigue la guía aquí</div>
  <div class="tip" style="text-align:left">👉 Usa los botones de abajo o <b>desliza la pantalla</b> para avanzar.</div>
 </section>
 
@@ -312,5 +315,10 @@ document.querySelectorAll('.see').forEach(b=>b.onclick=()=>{const k=b.dataset.im
 zm.onclick=()=>{const b=mdi.classList.toggle('big');zm.textContent=b?'🔍 Alejar':'🔍 Acercar'};
 document.getElementById('cl').onclick=()=>md.classList.remove('on');
 
+["gesturestart","gesturechange","gestureend"].forEach(e=>document.addEventListener(e,ev=>ev.preventDefault(),{passive:false}));
+document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});
+let lastT=0;document.addEventListener('touchend',e=>{const n=Date.now();if(n-lastT<300)e.preventDefault();lastT=n},{passive:false});
+document.addEventListener('wheel',e=>{if(e.ctrlKey)e.preventDefault()},{passive:false});
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&['+','-','=','0'].includes(e.key))e.preventDefault()});
 go(0);
 </script></body></html>
